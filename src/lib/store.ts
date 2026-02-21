@@ -48,6 +48,7 @@ async function writeBlob<T>(filename: string, data: T[]): Promise<void> {
         access: 'public',
         addRandomSuffix: false,
         contentType: 'application/json',
+        allowOverwrite: true,
     });
 }
 
