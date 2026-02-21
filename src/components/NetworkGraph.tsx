@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { Member, Connection } from '@/data/members';
+import { Member, Connection } from '@/lib/store';
 
 interface NetworkGraphProps {
     members: Member[];
@@ -60,7 +60,7 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
         const height = containerRef.current.clientHeight;
 
         isAnimatingRef.current = true;
-        
+
         const animate = () => {
             if (isAnimatingRef.current) {
                 updateVisuals();
@@ -70,17 +70,17 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
 
         if (searchQuery && highlightedMemberIds.length > 0) {
             const targetNode = nodesRef.current.find(n => highlightedMemberIds.includes(n.id));
-            
+
             if (targetNode) {
                 const newZoom = 2.5;
                 setZoomLevel(newZoom);
-                
+
                 const targetZoomedX = (targetNode.x - width / 2) * newZoom + width / 2;
                 const targetZoomedY = (targetNode.y - height / 2) * newZoom + height / 2;
-                
+
                 const offsetX = width / 2 - targetZoomedX;
                 const offsetY = height / 2 - targetZoomedY;
-                
+
                 setPanOffset({ x: offsetX, y: offsetY });
             }
         }
@@ -124,7 +124,7 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
                 const y1 = (fromNode.y - height / 2) * zoomLevel + height / 2 + panOffset.y;
                 const x2 = (toNode.x - width / 2) * zoomLevel + width / 2 + panOffset.x;
                 const y2 = (toNode.y - height / 2) * zoomLevel + height / 2 + panOffset.y;
-                
+
                 line.setAttribute('x1', x1.toString());
                 line.setAttribute('y1', y1.toString());
                 line.setAttribute('x2', x2.toString());
@@ -141,11 +141,11 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
             if (nodeDiv) {
                 const transformedX = (node.x - width / 2) * zoomLevel + width / 2 + panOffset.x;
                 const transformedY = (node.y - height / 2) * zoomLevel + height / 2 + panOffset.y;
-                
+
                 nodeDiv.style.left = `${transformedX}px`;
                 nodeDiv.style.top = `${transformedY}px`;
                 nodeDiv.style.transform = `translate(-50%, -50%) scale(${zoomLevel})`;
-                
+
                 const img = nodeDiv.querySelector('img');
                 if (img) {
                     const isHighlighted = highlightedMemberIds.length === 0 || highlightedMemberIds.includes(node.id);
@@ -271,7 +271,7 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
                 const mouseY = e.clientY - rect.top;
                 const transformedX = (node.x - width / 2) * zoomLevel + width / 2 + panOffset.x;
                 const transformedY = (node.y - height / 2) * zoomLevel + height / 2 + panOffset.y;
-                
+
                 dragOffsetRef.current = {
                     x: (mouseX - transformedX) * zoomLevel,
                     y: (mouseY - transformedY) * zoomLevel
@@ -320,7 +320,7 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
                 if (node) {
                     const mouseX = e.clientX - rect.left;
                     const mouseY = e.clientY - rect.top;
-                    
+
                     node.x = ((mouseX - panOffset.x - width / 2) / zoomLevel) + width / 2 - dragOffsetRef.current.x / zoomLevel;
                     node.y = ((mouseY - panOffset.y - height / 2) / zoomLevel) + height / 2 - dragOffsetRef.current.y / zoomLevel;
 
@@ -348,7 +348,7 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
                 isDraggingRef.current = false;
                 dragNodeRef.current = null;
             }
-            
+
             if (isPanningRef.current) {
                 isPanningRef.current = false;
                 container.style.cursor = '';
@@ -357,23 +357,23 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
 
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault();
-            
+
             const rect = container.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
-            
+
             const zoomDelta = e.deltaY > 0 ? 0.97 : 1.03;
             const newZoom = Math.min(Math.max(zoomLevel * zoomDelta, 0.5), 5);
-            
+
             const zoomPointX = (mouseX - panOffset.x - width / 2) / zoomLevel + width / 2;
             const zoomPointY = (mouseY - panOffset.y - height / 2) / zoomLevel + height / 2;
-            
+
             const newPanX = mouseX - (zoomPointX - width / 2) * newZoom - width / 2;
             const newPanY = mouseY - (zoomPointY - height / 2) * newZoom - height / 2;
-            
+
             setZoomLevel(newZoom);
             setPanOffset({ x: newPanX, y: newPanY });
-            
+
             setTimeout(() => updateVisuals(), 0);
         };
 
@@ -393,11 +393,11 @@ export default function NetworkGraph({ members, connections, highlightedMemberId
     }, [members, connections, isDark, zoomLevel, panOffset]);
 
     return (
-        <div 
+        <div
             ref={containerRef}
-            className="network-graph-container" 
-            style={{ 
-                width: '100%', 
+            className="network-graph-container"
+            style={{
+                width: '100%',
                 height: '400px'
             }}
         />

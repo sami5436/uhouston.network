@@ -1,10 +1,11 @@
-'use client';
-
 import SearchableContent from '@/components/SearchableContent';
-import { members, getConnections } from '@/data/members';
+import { getMembers, getConnections } from '@/lib/store';
 
-export default function Home() {
-  const connections = getConnections();
-  
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const members = await getMembers();
+  const connections = getConnections(members);
+
   return <SearchableContent members={members} connections={connections} />;
 }
