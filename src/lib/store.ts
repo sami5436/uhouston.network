@@ -1,4 +1,4 @@
-import { put, list } from '@vercel/blob';
+import { put, list, head } from '@vercel/blob';
 
 export interface Member {
     id: string;
@@ -31,10 +31,14 @@ async function readBlob<T>(filename: string, fallback: T[]): Promise<T[]> {
     try {
         const { blobs } = await list({ prefix: filename });
         if (blobs.length === 0) return fallback;
-        const res = await fetch(blobs[0].url);
+
+        // Use the downloadUrl which works for both public and private blobs
+        const blob = blobs[0];
+        const res = await fetch(blob.downloadUrl);
         if (!res.ok) return fallback;
         return await res.json();
-    } catch {
+    } catch (err) {
+        console.error(`readBlob(${filename}) error:`, err);
         return fallback;
     }
 }
