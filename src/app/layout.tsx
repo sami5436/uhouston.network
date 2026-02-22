@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/thumb.svg',
+        url: 'https://www.uhouston.network/thumb.png',
         width: 1280,
         height: 720,
         alt: 'uhouston.network',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "uhouston.network",
     description: "A webring for University of Houston students",
-    images: ['/thumb.svg'],
+    images: ['https://www.uhouston.network/thumb.png'],
   },
 };
 
