@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://uhouston-network.vercel.app'),
   title: "uhouston.network",
   description: "A webring for University of Houston students",
   icons: {
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://www.uhouston.network/thumb.png',
+        url: '/thumb.png',
         width: 1280,
         height: 720,
         alt: 'uhouston.network',
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "uhouston.network",
     description: "A webring for University of Houston students",
-    images: ['https://www.uhouston.network/thumb.png'],
+    images: ['/thumb.png'],
   },
 };
 
