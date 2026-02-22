@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/thumb.png',
-        width: 1280,
-        height: 720,
+        url: 'https://uhouston-network.vercel.app/front1.png',
+        width: 1200,
+        height: 630,
         alt: 'uhouston.network',
       },
     ],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "uhouston.network",
     description: "A webring for University of Houston students",
-    images: ['/thumb.png'],
+    images: ['https://uhouston-network.vercel.app/front1.png'],
   },
 };
 
