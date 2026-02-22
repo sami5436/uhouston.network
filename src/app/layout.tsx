@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: 'https://uhouston-network.vercel.app/front2.png',
-        width: 2576,
-        height: 1686,
+        width: 1200,
+        height: 630,
         alt: 'uhouston.network',
       },
     ],
