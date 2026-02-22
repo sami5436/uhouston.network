@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://uhouston-network.vercel.app'),
   title: "uhouston.network",
   description: "A webring for University of Houston students",
   icons: {
