@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
   --background: #ffffff;
@@ -13,7 +13,7 @@
   --hover-color: #1e40af;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
   --secondary: #a0a0a0;
@@ -36,11 +36,13 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 a {
@@ -127,7 +129,7 @@ a {
   font-weight: 500;
   text-decoration: none;
   transition: opacity 0.2s;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .github-link:hover {
@@ -179,7 +181,7 @@ a {
   font-size: 0.95rem;
   background: transparent;
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .search-input::placeholder {
@@ -341,15 +343,15 @@ a {
   color: var(--hover-color);
 }
 
-[data-theme='dark'] .social-icon-link svg {
+[data-theme="dark"] .social-icon-link svg {
   stroke: var(--foreground) !important;
 }
 
 /* ASCII Background */
 .ascii-art-background {
   position: fixed;
-  bottom: -10%;
-  right: -20%;
+  bottom: -20%;
+  right: -45%;
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -359,12 +361,12 @@ a {
   transform-origin: bottom right;
 }
 
-[data-theme='dark'] .ascii-art-background {
+[data-theme="dark"] .ascii-art-background {
   opacity: 0.15;
 }
 
 .ascii-art-background pre {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 8px;
   line-height: normal;
   margin: 0;
@@ -399,7 +401,6 @@ a {
   .graph-section {
     max-width: 100%;
   }
-
 
   .members-table {
     table-layout: auto;
@@ -507,7 +508,7 @@ a {
     font-size: 5px;
   }
 
-  [data-theme='dark'] .ascii-art-background {
+  [data-theme="dark"] .ascii-art-background {
     opacity: 0.1;
   }
 }
@@ -527,7 +528,7 @@ a {
   animation: fadeIn 0.2s ease;
 }
 
-[data-theme='dark'] .modal-overlay {
+[data-theme="dark"] .modal-overlay {
   background: rgba(0, 0, 0, 0.7);
 }
 
@@ -578,7 +579,9 @@ a {
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  transition: color 0.2s, background 0.2s;
+  transition:
+    color 0.2s,
+    background 0.2s;
 }
 
 .modal-close:hover {
@@ -644,13 +647,15 @@ a {
 .form-group select {
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--input-bg);
   color: var(--foreground);
   border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .form-group input:focus,
@@ -680,13 +685,15 @@ a {
   padding: 0.9rem 2rem;
   font-size: 1rem;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--foreground);
   color: var(--background);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
   margin-top: 0.5rem;
 }
 
@@ -713,7 +720,7 @@ a {
   font-size: 0.9rem;
 }
 
-[data-theme='dark'] .form-error {
+[data-theme="dark"] .form-error {
   background: #2d1515;
   color: #fca5a5;
   border-color: #5a2020;
@@ -768,7 +775,7 @@ a {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   display: flex;
   justify-content: center;
   padding: 3rem 2rem;
@@ -793,7 +800,7 @@ a {
 .admin-password-input {
   padding: 0.65rem 1rem;
   font-size: 0.95rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--input-bg);
   color: var(--foreground);
   border: 1px solid var(--border);
@@ -810,7 +817,7 @@ a {
 .admin-login-btn {
   padding: 0.65rem 1.25rem;
   font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--foreground);
   color: var(--background);
   border: none;
@@ -967,7 +974,7 @@ a {
 .admin-tab {
   padding: 0.4rem 0.9rem;
   font-size: 0.85rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -1008,7 +1015,7 @@ a {
 .admin-cancel-btn {
   padding: 0.75rem 1.5rem;
   font-size: 0.95rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: none;
   border: 1px solid var(--border);
   border-radius: 8px;
