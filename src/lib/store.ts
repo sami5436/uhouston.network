@@ -1,4 +1,4 @@
-import { put, list, head } from '@vercel/blob';
+import { put, list } from '@vercel/blob';
 
 export interface Member {
     id: string;
@@ -18,7 +18,7 @@ export interface Connection {
     toId: string;
 }
 
-export interface Submission extends Omit<Member, 'profilePic'> {
+export interface Submission extends Member {
     submittedAt: string;
 }
 
@@ -27,14 +27,22 @@ const SUBMISSIONS_BLOB = 'submissions.json';
 
 // ---- Blob helpers ----
 
+// Cache download URLs for the lifetime of the function instance.
+// Warm serverless instances reuse this, skipping the list() lookup on repeat calls.
+const urlCache: Record<string, string> = {};
+
 async function readBlob<T>(filename: string, fallback: T[]): Promise<T[]> {
     try {
-        const { blobs } = await list({ prefix: filename });
-        if (blobs.length === 0) return fallback;
+        let downloadUrl = urlCache[filename];
 
-        // Use the downloadUrl which works for both public and private blobs
-        const blob = blobs[0];
-        const res = await fetch(blob.downloadUrl);
+        if (!downloadUrl) {
+            const { blobs } = await list({ prefix: filename });
+            if (blobs.length === 0) return fallback;
+            downloadUrl = blobs[0].downloadUrl;
+            urlCache[filename] = downloadUrl;
+        }
+
+        const res = await fetch(downloadUrl);
         if (!res.ok) return fallback;
         return await res.json();
     } catch (err) {
@@ -44,12 +52,14 @@ async function readBlob<T>(filename: string, fallback: T[]): Promise<T[]> {
 }
 
 async function writeBlob<T>(filename: string, data: T[]): Promise<void> {
-    await put(filename, JSON.stringify(data, null, 2), {
+    const result = await put(filename, JSON.stringify(data), {
         access: 'public',
         addRandomSuffix: false,
         contentType: 'application/json',
         allowOverwrite: true,
     });
+    // Keep cache in sync so the next read skips list()
+    urlCache[filename] = result.downloadUrl;
 }
 
 // ---- Members ----

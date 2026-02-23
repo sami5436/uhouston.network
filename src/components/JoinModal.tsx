@@ -8,6 +8,8 @@ interface JoinModalProps {
     onClose: () => void;
 }
 
+const MAX_FILE_SIZE = 500 * 1024; // 500 KB
+
 export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     const [formData, setFormData] = useState({
         name: '',
@@ -21,6 +23,9 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
     });
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+    const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
+    const [profilePicPreview, setProfilePicPreview] = useState('');
+    const [profilePicError, setProfilePicError] = useState('');
 
     // Lock body scroll when modal is open
     useEffect(() => {
@@ -45,16 +50,48 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            setProfilePicError('Please select an image file');
+            return;
+        }
+        if (file.size > MAX_FILE_SIZE) {
+            setProfilePicError(`Too large (${Math.round(file.size / 1024)} KB). Max 500 KB.`);
+            return;
+        }
+
+        setProfilePicError('');
+        setProfilePicFile(file);
+        if (profilePicPreview) URL.revokeObjectURL(profilePicPreview);
+        setProfilePicPreview(URL.createObjectURL(file));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('submitting');
         setErrorMessage('');
 
         try {
+            let profilePic: string | undefined;
+
+            if (profilePicFile) {
+                const uploadForm = new FormData();
+                uploadForm.append('file', profilePicFile);
+                const uploadRes = await fetch('/api/upload', { method: 'POST', body: uploadForm });
+                if (!uploadRes.ok) {
+                    const data = await uploadRes.json();
+                    throw new Error(data.error || 'Failed to upload image');
+                }
+                profilePic = (await uploadRes.json()).url;
+            }
+
             const res = await fetch('/api/join', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, profilePic }),
             });
 
             if (!res.ok) {
@@ -76,6 +113,10 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
             setFormData({ name: '', website: '', program: '', year: '', instagram: '', twitter: '', linkedin: '', connections: '' });
             setStatus('idle');
             setErrorMessage('');
+            setProfilePicFile(null);
+            if (profilePicPreview) URL.revokeObjectURL(profilePicPreview);
+            setProfilePicPreview('');
+            setProfilePicError('');
         }, 300);
     };
 
@@ -134,6 +175,39 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
                                         onChange={handleChange}
                                     />
                                     <span className="form-hint">this is what the webring links to — make it yours!</span>
+                                </div>
+                            </div>
+
+                            <div className="form-section">
+                                <h3>profile photo</h3>
+                                <p className="section-hint">optional — square image, max 500 KB</p>
+                                <div className="photo-upload-area">
+                                    <div className="photo-preview">
+                                        {profilePicPreview
+                                            ? <img src={profilePicPreview} alt="Preview" className="photo-preview-img" />
+                                            : <div className="photo-preview-placeholder" />
+                                        }
+                                    </div>
+                                    <div className="photo-upload-controls">
+                                        <label htmlFor="profilePic" className="file-upload-btn">
+                                            {profilePicFile ? 'change photo' : 'choose photo'}
+                                        </label>
+                                        <input
+                                            id="profilePic"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            style={{ display: 'none' }}
+                                        />
+                                        {profilePicFile && !profilePicError && (
+                                            <span className="file-info">
+                                                {profilePicFile.name} · {Math.round(profilePicFile.size / 1024)} KB
+                                            </span>
+                                        )}
+                                        {profilePicError && (
+                                            <span className="file-error">{profilePicError}</span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 

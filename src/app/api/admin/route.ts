@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
                 website: submission.website,
                 program: submission.program,
                 year: submission.year,
+                profilePic: submission.profilePic,
                 instagram: submission.instagram,
                 twitter: submission.twitter,
                 linkedin: submission.linkedin,

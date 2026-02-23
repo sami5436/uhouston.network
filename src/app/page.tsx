@@ -1,7 +1,7 @@
 import SearchableContent from '@/components/SearchableContent';
 import { getMembers, getConnections } from '@/lib/store';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function Home() {
   const members = await getMembers();

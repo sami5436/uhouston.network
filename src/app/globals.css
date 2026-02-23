@@ -10,7 +10,7 @@
   --card-bg: #f9f9f9;
   --input-bg: #ffffff;
   --hover-bg: #f5f5f5;
-  --hover-color: #1e40af;
+  --hover-color: #C8102E;
 }
 
 [data-theme="dark"] {
@@ -23,7 +23,7 @@
   --card-bg: #141414;
   --input-bg: #1a1a1a;
   --hover-bg: #1f1f1f;
-  --hover-color: #1d4ed8;
+  --hover-color: #C8102E;
 }
 
 * {
@@ -146,19 +146,27 @@ a {
 }
 
 .join-link {
-  text-decoration: underline;
+  display: inline-block;
   font-weight: 500;
   cursor: pointer;
-  color: var(--foreground);
-  background: none;
+  color: #ffffff;
+  background: #C8102E;
   border: none;
-  font-size: inherit;
+  font-size: 0.9rem;
   font-family: inherit;
-  padding: 0;
+  padding: 0.35rem 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+  vertical-align: middle;
 }
 
 .join-link:hover {
-  color: var(--hover-color);
+  background: #a00d24;
+}
+
+.join-link:active {
+  transform: scale(0.97);
 }
 
 /* Search */
@@ -640,7 +648,7 @@ a {
 }
 
 .required {
-  color: #c0392b;
+  color: #C8102E;
 }
 
 .form-group input,
@@ -661,7 +669,7 @@ a {
 .form-group input:focus,
 .form-group select:focus {
   border-color: var(--hover-color);
-  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
 }
 
 .form-group input::placeholder {
@@ -748,6 +756,76 @@ a {
   line-height: 1.6;
   margin-bottom: 2rem;
   font-size: 1rem;
+}
+
+/* Photo upload in join form */
+.photo-upload-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.photo-preview {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--hover-bg);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.photo-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-preview-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--hover-bg);
+}
+
+.photo-upload-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.file-upload-btn {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  background: #C8102E;
+  color: #ffffff;
+  border: 1px solid #C8102E;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: fit-content;
+}
+
+.file-upload-btn:hover {
+  background: #a00d24;
+  border-color: #a00d24;
+}
+
+.file-info {
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
+.file-error {
+  font-size: 0.8rem;
+  color: #dc2626;
+}
+
+[data-theme="dark"] .file-error {
+  color: #fca5a5;
 }
 
 /* Responsive join modal */

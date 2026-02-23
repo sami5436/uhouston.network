@@ -15,7 +15,7 @@ export default function MembersTable({ members, searchQuery }: MembersTableProps
         const parts = text.split(new RegExp(`(${searchQuery})`, 'gi'));
         return parts.map((part, i) =>
             part.toLowerCase() === searchQuery.toLowerCase()
-                ? <mark key={i} style={{ background: '#ffd54f', padding: '0 2px' }}>{part}</mark>
+                ? <mark key={i} style={{ background: '#FFF9D9', padding: '0 2px' }}>{part}</mark>
                 : part
         );
     };

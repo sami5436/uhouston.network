@@ -133,7 +133,7 @@ export default function AdminPage() {
     // Auto-refresh
     useEffect(() => {
         if (!authed) return;
-        const interval = setInterval(() => { fetchSubmissions(); fetchMembers(); }, 30000);
+        const interval = setInterval(() => { fetchSubmissions(); fetchMembers(); }, 300000);
         return () => clearInterval(interval);
     }, [authed, fetchSubmissions, fetchMembers]);
 

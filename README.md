@@ -32,4 +32,4 @@ Visit [uhouston.network/join](https://uhouston.network/join) and fill out the fo
 
 ---
 
-made with ❤️ for coogs everywhere
+made with ❤️ by sami & yusuf for coogs everywhere

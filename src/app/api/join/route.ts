@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
             website: body.website.trim(),
             program: body.program?.trim() || undefined,
             year: body.year?.trim() || undefined,
+            profilePic: typeof body.profilePic === 'string' && body.profilePic.startsWith('https://') ? body.profilePic : undefined,
             instagram: body.instagram?.trim() || undefined,
             twitter: body.twitter?.trim() || undefined,
             linkedin: body.linkedin?.trim() || undefined,
